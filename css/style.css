@@ -80,6 +80,22 @@ section {
     border: solid 2px red;
 }
 
+/* ===== Card do Imóvel ===== */
+#imoveis {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1rem;
+}
+
+.imovel {
+    border: solid 1px blue; /* TESTE */
+}
+
+.foto {
+    height: 10rem;
+
+    border: solid 1px
+}
 /* ===== Footer ===== */
 footer {
     min-height: 16rem;
