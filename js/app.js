@@ -1,83 +1,83 @@
+// Link do "Banco de Dados" online
+const urlAPI = "https://66a29be8967c89168f20a323.mockapi.io/api/users";
 
-// Simula um JSON online (Banco de Dados)
-const listaImoveis = [
-    {
-        id: 1,
-        titulo: 'Apart. 3 dorm. Papicu',
-        descricao: 'Lindo apartamento de 3 dormitórios localizado num dos melhores bairros de Fortaleza.',
-        valor: 500.000,
-        area: 90,
-        quartos: 3,
-        tipo: 'apartamento', // casa, terreno
-        localizacao: 'Santos Dummont, Papicu',
-        mapa: 'link do maps',
-        venda_aluguel: 'venda', // aluguel
-        finalidade: 'residencial', // comercial
-        fotos: [
-            'https://id725a57.s3.amazonaws.com/fotos/i00035801.jpeg', // padrão [0]
-            'https://images.pexels.com/photos/206172/pexels-photo-206172.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-            'https://img.freepik.com/fotos-premium/uma-casa-branca-encantadora-com-um-telhado-vermelho-brilhante-e-uma-janela-azul_1258321-339.jpg?w=360',
-            'link4',
-            'link5',
-        ],
-        status: true,
-    }
-];
+// Acessa a API com os dados
+fetch(urlAPI)
+    // Retorna os dados encontrados e converte para JSON
+    .then(resultado => resultado.json())
 
+    // Manipula os dados retornados
+    .then(listaImoveis => {
+        if (listaImoveis.length == 0) {
+            document.querySelector("#imoveis").innerHTML = 'Não há imóveis cadastrados';
+        
+        } else {
+            criarCardImoveis(listaImoveis);
+        }
+    })
+    .catch((erro) => {
+        console.error("Erro", erro);
+        alert("Não foi possível carregar os dados");
+    });
 
+function criarCardImoveis(listaImoveis) {
+    // Percorre a Lista de Imóveis
+    listaImoveis.forEach(imovel => {
+        // console.log(imovel);
 
-// Percorre a Lista de Imóveis
-listaImoveis.forEach(imovel => {
-    // console.log(imovel);
+        // Cria o "card" do imóvel
+        const cardImovel = document.createElement("article");
+        cardImovel.classList.add("imovel");
+        document.querySelector("#imoveis").appendChild(cardImovel);
 
-    // Cria o "card" do imóvel
-    const cardImovel = document.createElement('article');
-    cardImovel.classList.add('imovel');
-    document.querySelector('#imoveis').appendChild(cardImovel);
+        // Foto
+        const divFoto = document.createElement("div");
+        divFoto.classList.add("foto");
+        cardImovel.appendChild(divFoto); // Adiciona a foto no card
 
-    // Foto
-    const divFoto = document.createElement('div');
-    divFoto.classList.add('foto');
-    cardImovel.appendChild(divFoto); // Adiciona a foto no card
+        const img = document.createElement("img");
+        img.setAttribute("src", imovel.fotos[0]);
+        divFoto.appendChild(img);
 
-    const img = document.createElement('img');
-    img.setAttribute('src', imovel.fotos[0]);
-    divFoto.appendChild(img);
+        // Conteúdo
+        const divConteudo = document.createElement("div");
+        divConteudo.classList.add("conteudo");
+        cardImovel.appendChild(divConteudo); // Adiciona o conteúdo no card
 
-    // Conteúdo
-    const divConteudo = document.createElement('div');
-    divConteudo.classList.add('conteudo');
-    cardImovel.appendChild(divConteudo); // Adiciona o conteúdo no card
+        const titulo = document.createElement("h3");
+        titulo.textContent = imovel.titulo;
+        divConteudo.appendChild(titulo);
 
-    const titulo = document.createElement('h3');
-    titulo.textContent = imovel.titulo;
-    divConteudo.appendChild(titulo);
+        const descricao = document.createElement("p");
+        descricao.textContent = imovel.descricao;
+        divConteudo.appendChild(descricao);
 
-    const descricao = document.createElement('p');
-    descricao.textContent = imovel.descricao;
-    divConteudo.appendChild(descricao);
+        // Info
+        const divInfo = document.createElement("div");
+        divInfo.classList.add("info");
+        cardImovel.appendChild(divInfo); // Adiciona a info no card
 
-    // Info
-    const divInfo = document.createElement('div');
-    divInfo.classList.add('info');
-    cardImovel.appendChild(divInfo); // Adiciona a info no card
+        const divDados = document.createElement("div");
+        divInfo.appendChild(divDados);
 
-    const divDados = document.createElement('div');
-    divInfo.appendChild(divDados);
-
-        const localizacao = document.createElement('span');
+        const localizacao = document.createElement("div");
         localizacao.textContent = `Localização: ${imovel.localizacao}`;
         divDados.appendChild(localizacao);
 
-        const quartos = document.createElement('span');
-        quartos.textContent = `Quartos: ${imovel.quartos}`;
+        const quartos = document.createElement("span");
+        quartos.textContent = `Quartos: ${imovel.quartos} | `;
         divDados.appendChild(quartos);
 
-        const area = document.createElement('span');
+        const area = document.createElement("span");
         area.textContent = `Área: ${imovel.area} m²`;
         divDados.appendChild(area);
 
-    const divValor = document.createElement('div');
-    divValor.textContent = `R$ ${imovel.valor.toFixed(2)}`;
-    divInfo.appendChild(divValor);
-});
+        const divValor = document.createElement("div");
+        divValor.classList.add("valor-imovel");
+        divValor.textContent = `${imovel.valor.toLocaleString("pt-br", {
+            style: "currency",
+            currency: "BRL",
+        })}`;
+        divDados.appendChild(divValor);
+    });
+}
