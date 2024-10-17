@@ -21,10 +21,10 @@
       },
 
       {
-        "titulo": "Apart. 3 dorm. Papicu",
+        "titulo": "Apart. 2 dorm. Papicu",
         "descricao": "Lindo apartamento de 3 dormitórios localizado num dos melhores bairros de Fortaleza.",
-        "valor": 800000,
-        "area": 90,
+        "valor": 650000,
+        "area": 80,
         "quartos": 3,
         "tipo": "apartamento",
         "localizacao": "Santos Dummont, Papicu",
